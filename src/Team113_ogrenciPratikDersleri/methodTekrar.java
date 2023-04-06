@@ -39,7 +39,7 @@ public class methodTekrar {
         }
         else {
             for (int i = baslangicDegeri; i < bitisDegeri-1; i++) {
-                System.out.print(kelime.charAt(i)+"-");
+                System.out.print(kelime.charAt  (i)+"-");
             }
             System.out.println(kelime.charAt(bitisDegeri-1));
         }
