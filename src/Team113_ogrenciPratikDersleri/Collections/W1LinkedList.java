@@ -2,74 +2,80 @@ package Team113_ogrenciPratikDersleri.Collections;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class W1LinkedList {
 
-    /*
-Java'da LinkedList, verileri düğümler halinde saklayan bir veri yapısıdır. Her düğüm, kendisinden sonraki düğümün adresini içerir ve son düğümün adresi null'dır.
 
-LinkedList, veri eklemek veya çıkarmak için hızlıdır. Listenin başına veya sonuna eleman eklemek veya çıkarmak için O(1) zaman karmaşıklığına sahiptir.
+          /*
+        Soru : Bir ogretmenden ogrencilerin notlarini girmesini isteyin, not grime islemi
+        bittiginde Q’ya basmalidir. Not grime islemi bittikten sonra asagidaki sekilde
+        output hazirlayin
+        not ortalamasi : …..
+        ogrenci sayisi : …..
+        ortalama altindaki ogrenci sayisi : ….
+        ortalamanin 10 puan alt ve ustunde olan ogrenci sayisi : ….
+     */
 
-Ancak, belirli bir düğüme erişmek için O(n) zaman karmaşıklığına sahiptir. Bu nedenle, LinkedList, özellikle veri ekleme veya çıkarma işlemlerinin
-sık yapıldığı senaryolarda kullanışlıdır.
+        static List<Double> notListesi = new LinkedList<>();
 
-LinkedList, List arabirimini uygular, bu nedenle bir ArrayList ile aynı şekilde kullanılabilir. Ancak, ArrayList, erişim süreleri konusunda daha hızlıdır
-ve sadece sona eklemeler veya son çıkarmalar yapılacaksa LinkedList'ten daha iyi performans gösterir.
-
-LinkedList, bağlantılı liste yapısı nedeniyle bir dizi olarak depolanan verilerden daha fazla bellek tüketir ve ayrıca daha
-yavaş erişim süreleri nedeniyle performansı etkileyebilir. Bu nedenle, LinkedList kullanmadan önce, uygulamanın ihtiyaçlarını dikkatlice düşünmek gerekir.
-    */
-    public static void main(String[] args) {
-
-        LinkedList linky = new LinkedList();
+        public static void main (String[]args){
 
 
-        LinkedList<String> ll1 = new LinkedList<>();
+            System.out.println("Oncelikle ogrenci not listesini olusturalim");
+            notListesineDegerEkle();
 
-        ll1.add("K");
-        ll1.add("T");
+            double notToplami = 0;
+            double notOrtalamasi;
+            int ortalamaAltindakiOgrenciSayisi = 0;
+            int ortalama10PuanAltUstOgrenciSayisi = 0;
 
-        // LinkedList 3 tane interface'i implements etmistir
-        // List, Queue, Deque interfaceleri
-        // Dolayisiyla bu interface'lerden sonra gelen ilk concrete class oldugundan
-        // Bu 3 interface'deki tum abstract method'lari override etmistir
+            for (Double eachNot : notListesi) {
+                notToplami += eachNot;
+            }
 
-        // LinkedList olusturulurken secilen data turune gore
-        // bu 3 interface'den birinin ozelliklerini alabilir
-        // veya data turu LinkedList secilirse, 3 interface'in ozelliklerini de toptan alir
+            notOrtalamasi = notToplami / notListesi.size();
+            for (Double eachNot : notListesi
+            ) {
 
-        List<String> ll2 = new LinkedList<>();
+                if (eachNot < notOrtalamasi) {
+                    ortalamaAltindakiOgrenciSayisi += 1;
+                }
+                if (eachNot > notOrtalamasi - 10 && eachNot <= notOrtalamasi + 10) {
+                    ortalama10PuanAltUstOgrenciSayisi += 1;
+                }
 
-        // Daha onceden arrayList olustururken, List<> interface'ini data turu olarak kullandigimizdan
-        // bu sekilde olusturulan LinkedList'lerin ozelliklerini biliyoruz
+            }
+            System.out.println("Not ortalamasi : " + notOrtalamasi +
+                    "\nOgrenci sayisi : " + notListesi.size() +
+                    "\nortalama altindaki ogrenci sayisi :" + ortalamaAltindakiOgrenciSayisi +
+                    "\nortalamanin 10 puan alt ve ustunde olan ogrenci sayisi :" + ortalama10PuanAltUstOgrenciSayisi);
+        }
 
-        ll2.add("R"); // [R]
+        public static void notListesineDegerEkle () {
 
-        ll2.add("Z"); // [R, Z]
+            Scanner scan = new Scanner(System.in);
+            double not;
+            boolean loopDevam = true;
 
-        ll2.add(0,"A"); // [A, R, Z]
+            while (loopDevam) {
+                try {
+                    System.out.println("Lutfen ogrenci notlarini giriniz \nBitirmek icin Q'ya basiniz");
+                    not = scan.nextDouble();
+                    notListesi.add(not);
+                } catch (Exception e) {
+                    String girilenDeger = scan.nextLine();
 
-        ll2.addAll(2,ll1); // [A, R, K, T, Z]
+                    if (girilenDeger.equalsIgnoreCase("Q")) {
+                        loopDevam = false;
+                        break;
+                    } else {
+                        System.out.println("Not icin sayisal degerler girmelisiniz");
+                    }
+                }
 
-        ll2.set(3,"M");
-
-        System.out.println(ll2.get(1)); // R
-
-
-        ll2.add("K");
-        ll2.add("T");
-        System.out.println(ll2); // [A, R, K, M, Z, K, T]
-
-        System.out.println(ll2.retainAll(ll1)); // true
-
-        System.out.println(ll2); // [K, K, T]
-        ll2.add("A");
-
-        System.out.println(ll2.hashCode()); // 3232590  [K, K, T, A]
-
-        // System.out.println(ll2.get(4)); Exc
+            }
 
 
-        System.out.println(ll2.subList(2, 4)); // 2 dahil, 4 dahil olmadigindan exception firlatmaz
+        }
     }
-}
